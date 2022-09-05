@@ -81,12 +81,6 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
 class PhoneVerificationView(GenericAPIView):
     """
-    url: api/2fa/phone-verify/
-    --header 'Authorization: Bearer <access token>
-    --data-raw '{
-        "authy_phone": "+48123456789"
-    }'
-
     2FA JWT Authentication: Step 1
     Twilio phone verification view.
     This endpoint will check if user mobile phone number is valid.
@@ -106,12 +100,6 @@ class PhoneVerificationView(GenericAPIView):
 
 class PhoneRegistrationView(GenericAPIView):
     """
-    url: api/2fa/phone-register/
-    --header 'Authorization: Bearer <access token>
-    --data-raw '{
-        "authy_phone": "+48123456789",
-            "token": "1234"
-    }'
     2FA JWT Authentication: Step 2
     Twilio 2FA phone registration view.
     First it will validate if 4 digit tokend sent to user phone number is valid.
@@ -149,12 +137,6 @@ class PhoneRegistrationView(GenericAPIView):
 class AuthyTokenVerifyView(TokenObtainPairView):
 
     """
-    url: api/2fa/token-verify/
-    --data-raw '{
-        "username": "twilio",
-        "password": "twiliopass",
-        "token": "7654321"
-    }'
     2FA JWT Authentication: Step 3
     Twilio 2FA user authentication view.
     This view verify if Twilio 2FA registered user entered correct 8 digit token.
