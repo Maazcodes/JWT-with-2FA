@@ -137,4 +137,9 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL = "authapp.CustomUser"
 
+# message service id is required here
+# Set up messsage service id - https://console.twilio.com/us1/service/sms/
+# Get this message service id and try to send sms on your verified mobile number using twilio website on UI.  
+# https://console.twilio.com/us1/develop/sms/try-it-out/send-an-sms
+# Setup Authy application by creating application - https://console.twilio.com/us1/develop/authy/
 ACCOUNT_SECURITY_API_KEY = config('API_KEY')

@@ -1,4 +1,5 @@
 from authapp.models import Employee
+from django.contrib.auth import get_user_model
 from django.conf import settings
 
 from authy.api import AuthyApiClient
@@ -9,11 +10,17 @@ from rest_framework.fields import CharField
 from rest_framework.serializers import ModelSerializer, Serializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+from authapp.models import CustomUser
+
 
 authy_api = AuthyApiClient(settings.ACCOUNT_SECURITY_API_KEY)
 
+class CustomUserSerializer(ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = "__all__"
 
-class PhoneSerializer(Serializer):
+class PhoneSerializer(Serializer): 
     authy_phone = PhoneNumberField(required=True)
 
     def validate(self, data):
@@ -27,7 +34,7 @@ class PhoneSerializer(Serializer):
             raise ValidationError(authy_phone.errors())
 
 
-class PhoneTokenSerializer(Serializer):
+class PhoneTokenSerializer(Serializer):  
     authy_phone = PhoneNumberField(required=True)
     token = CharField(min_length=4, required=True, write_only=True)
 
@@ -43,11 +50,16 @@ class PhoneTokenSerializer(Serializer):
             raise ValidationError(authy_phone.errors())
 
 
-class UserTokenSerializer(TokenObtainPairSerializer):
+class UserTokenSerializer(TokenObtainPairSerializer): 
     token = CharField(min_length=7, required=True)
 
-
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ['id', 'username']
+        
 class EmployeeSerializer(ModelSerializer):
+
     class Meta:
         model = Employee
         fields = "__all__"
